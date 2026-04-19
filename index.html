@@ -84,12 +84,13 @@ margin-bottom:10px;
 }
 
 .hero p{
-opacity:.8;
+opacity:.9;
 margin-bottom:20px;
+font-size:18px;
 }
 
 .btn{
-padding:10px 25px;
+padding:12px 30px;
 background:#00e5ff;
 border:none;
 border-radius:25px;
@@ -97,13 +98,16 @@ cursor:pointer;
 color:#000;
 font-weight:bold;
 transition:.3s;
+display:inline-block;
+margin:10px;
+text-decoration:none;
 }
 
 .btn:hover{
 transform:scale(1.1);
 }
 
-/* Work */
+/* Sections */
 section{
 padding:80px 40px;
 text-align:center;
@@ -114,6 +118,7 @@ font-size:35px;
 margin-bottom:40px;
 }
 
+/* Projects */
 .projects{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -139,7 +144,6 @@ transform:translateY(-10px) scale(1.05);
 box-shadow:0 20px 40px rgba(0,229,255,.3);
 }
 
-/* Overlay */
 .overlay{
 position:absolute;
 bottom:0;
@@ -153,6 +157,12 @@ transition:.3s;
 
 .card:hover .overlay{
 opacity:1;
+}
+
+/* Pricing */
+.pricing p{
+font-size:18px;
+margin:10px 0;
 }
 
 /* About */
@@ -169,7 +179,7 @@ padding:20px;
 background:#020617;
 }
 
-/* WhatsApp Button */
+/* WhatsApp */
 .whatsapp{
 position:fixed;
 bottom:20px;
@@ -203,6 +213,7 @@ background:#1ebe5d;
 <div>
 <a href="#">الرئيسية</a>
 <a href="#work">أعمالي</a>
+<a href="#pricing">الأسعار</a>
 <a href="#about">عنّي</a>
 </div>
 </nav>
@@ -211,7 +222,12 @@ background:#1ebe5d;
 <div class="hero">
 <img src="logo.png">
 <h1>MindSketch 🎨</h1>
-<p>نحول أفكارك إلى تصاميم إبداعية تلفت الأنظار</p>
+<p>تصاميم احترافية تساعدك تزود مبيعاتك وتجذب عملاء أكتر 🔥</p>
+
+<a href="https://wa.me/201029261683?text=عايز تصميم احترافي من MindSketch 🔥" class="btn">
+اطلب تصميم الآن
+</a>
+
 <button class="btn" onclick="scrollToWork()">شوف شغلي</button>
 </div>
 
@@ -236,12 +252,17 @@ background:#1ebe5d;
 <div class="overlay">MindSketch Logo</div>
 </div>
 
-<div class="card">
-<img src="1.jpg">
-<div class="overlay">Creative Design</div>
 </div>
+</section>
 
-</div>
+<!-- Pricing -->
+<section id="pricing" class="pricing">
+<h2 class="title">الأسعار 💰</h2>
+
+<p>بوست سوشيال ميديا: 100 جنيه</p>
+<p>لوجو احترافي: 300 جنيه</p>
+<p>هوية كاملة: 1000 جنيه</p>
+
 </section>
 
 <!-- About -->
@@ -257,7 +278,7 @@ background:#1ebe5d;
 </footer>
 
 <!-- WhatsApp Button -->
-<a href="https://wa.me/201029261683" target="_blank" class="whatsapp">
+<a href="https://wa.me/201029261683?text=عايز تصميم احترافي 🔥" target="_blank" class="whatsapp">
 💬
 </a>
 
