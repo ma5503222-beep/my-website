@@ -9,307 +9,488 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+--primary:#22c55e;
+--secondary:#06b6d4;
+--bg:#0b1220;
+--card:#111a2e;
+--text:#e2e8f0;
+--muted:#94a3b8;
+}
 
 body{
 font-family:'Cairo',sans-serif;
-background:#0b0f19;
-color:#fff;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
 }
 
-/* Loader */
-#loader{
-position:fixed;
-width:100%;
-height:100%;
-background:#0b0f19;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:9999;
+/* INTRO */
+#intro{
+position:fixed;inset:0;
+background:var(--bg);
+z-index:99999;
+display:flex;justify-content:center;align-items:center;
+animation:fadeOut 2.5s ease forwards;
+animation-delay:2.5s;
 }
-
-.spinner{
-width:60px;
-height:60px;
-border:5px solid #222;
-border-top:5px solid #7c3aed;
-border-radius:50%;
-animation:spin 1s linear infinite;
-margin-bottom:15px;
+#intro img{
+width:90px;
+animation:pop 2s ease;
+filter:drop-shadow(0 0 20px rgba(34,197,94,.5));
 }
+@keyframes pop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
-@keyframes spin{
-0%{transform:rotate(0)}
-100%{transform:rotate(360deg)}
-}
-
-/* Navbar */
+/* NAV */
 nav{
-position:fixed;
-width:100%;
-top:0;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(10px);
-display:flex;
-justify-content:space-between;
+position:fixed;top:0;width:100%;z-index:1000;
+display:flex;justify-content:space-between;align-items:center;
 padding:15px 40px;
-z-index:1000;
+background:rgba(11,18,32,.7);
+backdrop-filter:blur(14px);
 }
+nav.scrolled{background:var(--bg)}
 
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{width:40px;animation:float 3s infinite ease-in-out}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 
-.logo img{width:40px}
-.logo span{color:#7c3aed;font-weight:bold}
+.logo span{color:var(--primary);font-weight:bold}
 
-nav a{
-color:#fff;
-margin-left:20px;
-text-decoration:none;
-transition:.3s;
-}
-nav a:hover{color:#7c3aed}
+nav a{color:var(--text);margin-left:15px;text-decoration:none}
+nav a:hover{color:var(--primary)}
 
-/* Hero */
+/* HERO */
 .hero{
 height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-background:linear-gradient(135deg,#020617,#0b0f19,#1e1b4b);
+display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
 }
-
 .hero h1{
-font-size:50px;
-background:linear-gradient(90deg,#7c3aed,#06b6d4);
+font-size:54px;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
 -webkit-background-clip:text;
 color:transparent;
 }
-
-.hero p{margin:15px 0;opacity:.8}
+.hero p{color:var(--muted)}
 
 .btn{
-background:linear-gradient(135deg,#7c3aed,#06b6d4);
-padding:12px 30px;
-border:none;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+padding:12px 28px;
 border-radius:30px;
 color:#fff;
 text-decoration:none;
-margin-top:15px;
-display:inline-block;
 transition:.3s;
+box-shadow:0 10px 25px rgba(34,197,94,.25);
 }
-.btn:hover{transform:scale(1.1)}
+.btn:hover{transform:scale(1.08)}
 
-/* Sections */
-section{
-padding:80px 40px;
-text-align:center;
-}
+section{padding:90px 40px;text-align:center}
+.title{font-size:34px;margin-bottom:40px}
 
-.title{
-font-size:35px;
-margin-bottom:40px;
-}
+/* SERVICES */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.service{background:var(--card);padding:25px;border-radius:16px;transition:.3s}
+.service:hover{transform:translateY(-10px)}
 
-/* Services */
-.services{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
+/* PORTFOLIO */
+.projects{column-count:3;column-gap:20px}
+@media(max-width:900px){.projects{column-count:2}}
+@media(max-width:500px){.projects{column-count:1}}
 
-.service{
-background:#111827;
+.card{position:relative;break-inside:avoid;margin-bottom:20px;border-radius:15px;overflow:hidden}
+.card img{width:100%;transition:.5s}
+.card:hover img{transform:scale(1.1);filter:brightness(.6)}
+
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;opacity:0;transition:.4s}
+.card:hover .overlay{opacity:1}
+.overlay h3,.overlay span{transform:translateY(20px);transition:.4s}
+.card:hover .overlay h3,.card:hover .overlay span{transform:translateY(0)}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.package{background:var(--card);padding:25px;border-radius:16px;transition:.3s}
+.package:hover{transform:translateY(-10px)}
+.package li{color:var(--muted);margin:6px 0}
+
+/* FORM (RESTORED) */
+.form{
+background:var(--card);
 padding:30px;
-border-radius:15px;
-transition:.3s;
+border-radius:16px;
+max-width:500px;
+margin:auto;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
-
-.service:hover{
-transform:translateY(-10px);
-box-shadow:0 20px 40px rgba(124,58,237,.3);
-}
-
-/* Portfolio */
-.projects{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-.card{
-overflow:hidden;
-border-radius:15px;
-cursor:pointer;
-}
-
-.card img{
+.form input{
 width:100%;
-height:220px;
-object-fit:cover;
-transition:.4s;
-}
-
-.card:hover img{
-transform:scale(1.1);
-}
-
-/* Popup */
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.9);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:2000;
-}
-
-.popup img{
-max-width:90%;
-max-height:90%;
+padding:12px;
+margin:10px 0;
 border-radius:10px;
+border:none;
+outline:none;
+background:#0f172a;
+color:#fff;
 }
+.form input::placeholder{color:var(--muted)}
 
-/* Scroll Animation */
-.fade{
-opacity:0;
-transform:translateY(40px);
-transition:all 1s ease;
-}
-
-.fade.show{
-opacity:1;
-transform:translateY(0);
-}
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.testimonial{background:var(--card);padding:20px;border-radius:16px}
 
 /* CTA */
-.cta{
-background:linear-gradient(135deg,#7c3aed,#06b6d4);
-padding:60px;
-border-radius:20px;
+.cta{background:linear-gradient(135deg,var(--primary),var(--secondary));padding:60px;border-radius:20px}
+
+footer{padding:20px;text-align:center;color:var(--muted)}
+
+.whatsapp{
+position:fixed;bottom:20px;left:20px;
+width:55px;height:55px;border-radius:50%;
+background:#25d366;display:flex;justify-content:center;align-items:center;
+font-size:26px;color:#fff;
 }
 
-/* Footer */
-footer{
-text-align:center;
-padding:20px;
-background:#020617;
-}
+.fade{opacity:0;transform:translateY(30px);transition:.8s}
+.fade.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 
 <body>
 
-<!-- Loader -->
-<div id="loader">
-<div class="spinner"></div>
-<p>جاري تحميل الموقع...</p>
+<div id="intro">
+<img src="logo.png">
 </div>
 
 <nav>
 <div class="logo">
-<img src="logo.png">
-<span>MindSketch</span>
+<img src="logo.png"><span>MindSketch</span>
 </div>
-
 <div>
-<a href="#">الرئيسية</a>
-<a href="#services">خدماتي</a>
-<a href="#work">أعمالي</a>
+<a href="#services">الخدمات</a>
+<a href="#work">الأعمال</a>
+<a href="#packages">الباقات</a>
+<a href="#courses">الكورسات</a>
+<a href="#book">الحجز</a>
 </div>
 </nav>
 
-<!-- Hero -->
-<div class="hero fade">
-<h1>MindSketch Agency لتصميمات الجرافيك الاحترافية</h1>
-<p>نصمم لك هوية بصرية تبيع وتخطف الانتباه 🔥</p>
-<a href="https://wa.me/201029261683?text=عايز تصميم احترافي 🔥" class="btn">ابدأ مشروعك الآن</a>
-</div>
+<section class="hero fade">
+<h1>نصمم ونبني ونبيع 🔥</h1>
+<p>Branding + Design + Courses</p>
+<a class="btn" href="https://wa.me/201029261683">ابدأ الآن</a>
+</section>
 
-<!-- Services -->
 <section id="services" class="fade">
-<h2 class="title">خدماتي</h2>
+<h2 class="title">الخدمات</h2>
 <div class="services">
-<div class="service">تصميم سوشيال ميديا</div>
-<div class="service">تصميم لوجو</div>
-<div class="service">هوية بصرية كاملة</div>
+<div class="service">تصميم سوشيال</div>
+<div class="service">لوجو</div>
+<div class="service">هوية بصرية</div>
 </div>
 </section>
 
-<!-- Portfolio -->
 <section id="work" class="fade">
-<h2 class="title">أعمالي</h2>
+<h2 class="title">الأعمال</h2>
 <div class="projects">
-<div class="card"><img src="1.jpg"></div>
-<div class="card"><img src="2.jpg"></div>
-<div class="card"><img src="3.jpg"></div>
-<div class="card"><img src="4.jpg"></div>
-<div class="card"><img src="5.jpg"></div>
-<div class="card"><img src="6.jpg"></div>
+<script>
+for(let i=1;i<=17;i++){
+document.write(`<div class='card'><img src='${i}.jpg'><div class='overlay'><h3>مشروع ${i}</h3><span>Brand</span></div></div>`)
+}
+</script>
 </div>
 </section>
 
-<!-- CTA -->
-<section class="fade">
-<div class="cta">
-<h2>جاهز نشتغل سوا؟ 🚀</h2>
-<p>تواصل معايا دلوقتي وابدأ مشروعك</p>
-<a href="https://wa.me/201029261683" class="btn">واتساب</a>
+<section id="packages" class="fade">
+<h2 class="title">الباقات</h2>
+<div class="packages">
+<div class="package"><h3>أساسية</h3><ul><li>تصميمات</li><li>دعم</li></ul></div>
+<div class="package"><h3>احترافية</h3><ul><li>هوية كاملة</li><li>دعم أولوية</li></ul></div>
+<div class="package"><h3>إليت</h3><ul><li>استراتيجية</li><li>تصميم كامل</li></ul></div>
 </div>
 </section>
 
-<footer>
-<p>© 2026 MindSketch Agency Ahmed&R</p>
-</footer>
-
-<!-- Popup -->
-<div id="popup" class="popup">
-<img id="popup-img">
+<section id="courses" class="fade">
+<h2 class="title">كورسات أونلاين</h2>
+<div class="packages">
+<div class="package"><h3>Photoshop</h3><ul><li>من الصفر</li></ul></div>
+<div class="package"><h3>Illustrator</h3><ul><li>شعارات</li></ul></div>
 </div>
+</section>
+
+<!-- BOOKING RESTORED -->
+<section id="book" class="fade">
+<h2 class="title">احجز الآن</h2>
+<div class="form">
+<input type="text" placeholder="الاسم">
+<input type="text" placeholder="رقم الهاتف">
+<input type="text" placeholder="الخدمة المطلوبة">
+<a class="btn" href="https://wa.me/201029261683?text=عايز احجز">إرسال</a>
+</div>
+</section>
+
+<section class="cta fade">
+<h2>عدد محدود أسبوعيًا ⏳</h2>
+<a class="btn" href="https://wa.me/201029261683">احجز الآن</a>
+</section>
+
+<footer>© 2026 MindSketch Ahmed&R</footer>
+
+<a class="whatsapp" href="https://wa.me/201029261683">💬</a>
 
 <script>
-// Loader
-window.addEventListener("load", ()=>{
-const loader=document.getElementById("loader");
-loader.style.opacity="0";
-setTimeout(()=>{loader.style.display="none"},500);
-});
+window.addEventListener('load',()=>intro.style.display='none')
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show')})})
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el))
+</script>
 
-// Popup
-const imgs=document.querySelectorAll(".card img");
-const popup=document.getElementById("popup");
-const popupImg=document.getElementById("popup-img");
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindSketch Agency</title>
 
-imgs.forEach(img=>{
-img.onclick=()=>{
-popup.style.display="flex";
-popupImg.src=img.src;
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+--primary:#22c55e;
+--secondary:#06b6d4;
+--bg:#0b1220;
+--card:#111a2e;
+--text:#e2e8f0;
+--muted:#94a3b8;
 }
-});
-popup.onclick=()=>popup.style.display="none";
 
-// Scroll Animation
-const elements=document.querySelectorAll(".fade");
-
-window.addEventListener("scroll", ()=>{
-elements.forEach(el=>{
-const top=el.getBoundingClientRect().top;
-if(top < window.innerHeight - 100){
-el.classList.add("show");
+body{
+font-family:'Cairo',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
 }
-});
-});
+
+/* INTRO */
+#intro{
+position:fixed;inset:0;
+background:var(--bg);
+z-index:99999;
+display:flex;justify-content:center;align-items:center;
+animation:fadeOut 2.5s ease forwards;
+animation-delay:2.5s;
+}
+#intro img{
+width:90px;
+animation:pop 2s ease;
+filter:drop-shadow(0 0 20px rgba(34,197,94,.5));
+}
+@keyframes pop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+
+/* NAV */
+nav{
+position:fixed;top:0;width:100%;z-index:1000;
+display:flex;justify-content:space-between;align-items:center;
+padding:15px 40px;
+background:rgba(11,18,32,.7);
+backdrop-filter:blur(14px);
+}
+nav.scrolled{background:var(--bg)}
+
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{width:40px;animation:float 3s infinite ease-in-out}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+.logo span{color:var(--primary);font-weight:bold}
+
+nav a{color:var(--text);margin-left:15px;text-decoration:none}
+nav a:hover{color:var(--primary)}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+}
+.hero h1{
+font-size:54px;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
+-webkit-background-clip:text;
+color:transparent;
+}
+.hero p{color:var(--muted)}
+
+.btn{
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+padding:12px 28px;
+border-radius:30px;
+color:#fff;
+text-decoration:none;
+transition:.3s;
+box-shadow:0 10px 25px rgba(34,197,94,.25);
+}
+.btn:hover{transform:scale(1.08)}
+
+section{padding:90px 40px;text-align:center}
+.title{font-size:34px;margin-bottom:40px}
+
+/* SERVICES */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.service{background:var(--card);padding:25px;border-radius:16px;transition:.3s}
+.service:hover{transform:translateY(-10px)}
+
+/* PORTFOLIO */
+.projects{column-count:3;column-gap:20px}
+@media(max-width:900px){.projects{column-count:2}}
+@media(max-width:500px){.projects{column-count:1}}
+
+.card{position:relative;break-inside:avoid;margin-bottom:20px;border-radius:15px;overflow:hidden}
+.card img{width:100%;transition:.5s}
+.card:hover img{transform:scale(1.1);filter:brightness(.6)}
+
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;opacity:0;transition:.4s}
+.card:hover .overlay{opacity:1}
+.overlay h3,.overlay span{transform:translateY(20px);transition:.4s}
+.card:hover .overlay h3,.card:hover .overlay span{transform:translateY(0)}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.package{background:var(--card);padding:25px;border-radius:16px;transition:.3s}
+.package:hover{transform:translateY(-10px)}
+.package li{color:var(--muted);margin:6px 0}
+
+/* FORM (RESTORED) */
+.form{
+background:var(--card);
+padding:30px;
+border-radius:16px;
+max-width:500px;
+margin:auto;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.form input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+border:none;
+outline:none;
+background:#0f172a;
+color:#fff;
+}
+.form input::placeholder{color:var(--muted)}
+
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.testimonial{background:var(--card);padding:20px;border-radius:16px}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,var(--primary),var(--secondary));padding:60px;border-radius:20px}
+
+footer{padding:20px;text-align:center;color:var(--muted)}
+
+.whatsapp{
+position:fixed;bottom:20px;left:20px;
+width:55px;height:55px;border-radius:50%;
+background:#25d366;display:flex;justify-content:center;align-items:center;
+font-size:26px;color:#fff;
+}
+
+.fade{opacity:0;transform:translateY(30px);transition:.8s}
+.fade.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+<img src="logo.png">
+</div>
+
+<nav>
+<div class="logo">
+<img src="logo.png"><span>MindSketch</span>
+</div>
+<div>
+<a href="#services">الخدمات</a>
+<a href="#work">الأعمال</a>
+<a href="#packages">الباقات</a>
+<a href="#courses">الكورسات</a>
+<a href="#book">الحجز</a>
+</div>
+</nav>
+
+<section class="hero fade">
+<h1>نصمم ونبني ونبيع 🔥</h1>
+<p>Branding + Design + Courses</p>
+<a class="btn" href="https://wa.me/201029261683">ابدأ الآن</a>
+</section>
+
+<section id="services" class="fade">
+<h2 class="title">الخدمات</h2>
+<div class="services">
+<div class="service">تصميم سوشيال</div>
+<div class="service">لوجو</div>
+<div class="service">هوية بصرية</div>
+</div>
+</section>
+
+<section id="work" class="fade">
+<h2 class="title">الأعمال</h2>
+<div class="projects">
+<script>
+for(let i=1;i<=17;i++){
+document.write(`<div class='card'><img src='${i}.jpg'><div class='overlay'><h3>مشروع ${i}</h3><span>Brand</span></div></div>`)
+}
+</script>
+</div>
+</section>
+
+<section id="packages" class="fade">
+<h2 class="title">الباقات</h2>
+<div class="packages">
+<div class="package"><h3>أساسية</h3><ul><li>تصميمات</li><li>دعم</li></ul></div>
+<div class="package"><h3>احترافية</h3><ul><li>هوية كاملة</li><li>دعم أولوية</li></ul></div>
+<div class="package"><h3>إليت</h3><ul><li>استراتيجية</li><li>تصميم كامل</li></ul></div>
+</div>
+</section>
+
+<section id="courses" class="fade">
+<h2 class="title">كورسات أونلاين</h2>
+<div class="packages">
+<div class="package"><h3>Photoshop</h3><ul><li>من الصفر</li></ul></div>
+<div class="package"><h3>Illustrator</h3><ul><li>شعارات</li></ul></div>
+</div>
+</section>
+
+<!-- BOOKING RESTORED -->
+<section id="book" class="fade">
+<h2 class="title">احجز الآن</h2>
+<div class="form">
+<input type="text" placeholder="الاسم">
+<input type="text" placeholder="رقم الهاتف">
+<input type="text" placeholder="الخدمة المطلوبة">
+<a class="btn" href="https://wa.me/201029261683?text=عايز احجز">إرسال</a>
+</div>
+</section>
+
+<section class="cta fade">
+<h2>عدد محدود أسبوعيًا ⏳</h2>
+<a class="btn" href="https://wa.me/201029261683">احجز الآن</a>
+</section>
+
+<footer>© 2026 MindSketch Ahmed&R</footer>
+
+<a class="whatsapp" href="https://wa.me/201029261683">💬</a>
+
+<script>
+window.addEventListener('load',()=>intro.style.display='none')
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show')})})
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el))
 </script>
 
 </body>
