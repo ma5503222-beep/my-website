@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<style>
+body{background:#0b1220;color:#fff;font-family:Cairo;padding:40px}
+.card{background:#111;padding:15px;margin:10px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<h1>📊 العملاء</h1>
+<div id="data"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "YOUR_KEY",
+authDomain: "YOUR_DOMAIN",
+projectId: "YOUR_ID",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadData(){
+let data=document.getElementById("data");
+
+const querySnapshot = await getDocs(collection(db, "clients"));
+querySnapshot.forEach(doc=>{
+let b=doc.data();
+data.innerHTML+=`
+<div class="card">
+👤 ${b.name}<br>
+📞 ${b.phone}<br>
+🎯 ${b.service}
+</div>
+`;
+});
+}
+
+loadData();
+</script>
+
+</body>
+</html>
