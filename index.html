@@ -9,293 +9,240 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Cairo;background:#0b1220;color:#fff;overflow-x:hidden}
-
 html{scroll-behavior:smooth}
+
+:root{
+--primary:#22c55e;
+--secondary:#06b6d4;
+--bg:#0b1220;
+--card:#111a2e;
+--text:#e2e8f0;
+--muted:#94a3b8;
+}
+
+body{
+font-family:'Cairo',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+}
+
+/* INTRO */
+#intro{
+position:fixed;inset:0;
+background:var(--bg);
+z-index:99999;
+display:flex;justify-content:center;align-items:center;
+animation:fadeOut 2.5s ease forwards;
+animation-delay:2.5s;
+}
+#intro img{
+width:90px;
+animation:pop 2s ease;
+filter:drop-shadow(0 0 20px rgba(34,197,94,.5));
+}
+@keyframes pop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
 /* NAV */
 nav{
 position:fixed;top:0;width:100%;z-index:1000;
 display:flex;justify-content:space-between;align-items:center;
 padding:15px 40px;
-background:rgba(0,0,0,.4);
-backdrop-filter:blur(10px);
+background:rgba(11,18,32,.7);
+backdrop-filter:blur(14px);
 }
+nav.scrolled{background:var(--bg)}
+
 .logo{display:flex;align-items:center;gap:10px}
-.logo img{width:40px;animation:float 3s infinite}
-@keyframes float{50%{transform:translateY(-5px)}}
+.logo img{width:40px;animation:float 3s infinite ease-in-out}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+.logo span{color:var(--primary);font-weight:bold}
+
+nav a{color:var(--text);margin-left:15px;text-decoration:none}
+nav a:hover{color:var(--primary)}
 
 /* HERO */
 .hero{
 height:100vh;
 display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-background:linear-gradient(120deg,#0b1220,#111a2e);
 }
 .hero h1{
-font-size:55px;
-background:linear-gradient(90deg,#22c55e,#06b6d4);
+font-size:54px;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
 -webkit-background-clip:text;
 color:transparent;
-animation:fadeUp 1s ease;
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1}}
+.hero p{color:var(--muted)}
 
 .btn{
-background:linear-gradient(135deg,#22c55e,#06b6d4);
-padding:12px 25px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+padding:12px 28px;
 border-radius:30px;
-border:none;
 color:#fff;
-cursor:pointer;
-margin-top:10px;
+text-decoration:none;
 transition:.3s;
+box-shadow:0 10px 25px rgba(34,197,94,.25);
 }
-.btn:hover{transform:scale(1.1)}
+.btn:hover{transform:scale(1.08)}
 
 section{padding:90px 40px;text-align:center}
-.title{font-size:34px;margin-bottom:30px}
+.title{font-size:34px;margin-bottom:40px}
 
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
+/* SERVICES */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.service{background:var(--card);padding:25px;border-radius:16px;transition:.3s}
+.service:hover{transform:translateY(-10px)}
 
-.card{
-background:#111a2e;
-padding:25px;
-border-radius:15px;
-transition:.3s;
-}
-.card:hover{transform:translateY(-10px)}
+/* PORTFOLIO */
+.projects{column-count:3;column-gap:20px}
+@media(max-width:900px){.projects{column-count:2}}
+@media(max-width:500px){.projects{column-count:1}}
 
-/* PROJECTS */
-.projects{
-column-count:3;
-column-gap:15px;
-}
-.project{
-break-inside:avoid;
-margin-bottom:15px;
-border-radius:10px;
-overflow:hidden;
-}
-.project img{width:100%;transition:.5s}
-.project:hover img{transform:scale(1.1);filter:brightness(.6)}
+.card{position:relative;break-inside:avoid;margin-bottom:20px;border-radius:15px;overflow:hidden}
+.card img{width:100%;transition:.5s}
+.card:hover img{transform:scale(1.1);filter:brightness(.6)}
 
-/* FORM */
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;opacity:0;transition:.4s}
+.card:hover .overlay{opacity:1}
+.overlay h3,.overlay span{transform:translateY(20px);transition:.4s}
+.card:hover .overlay h3,.card:hover .overlay span{transform:translateY(0)}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.package{background:var(--card);padding:25px;border-radius:16px;transition:.3s}
+.package:hover{transform:translateY(-10px)}
+.package li{color:var(--muted);margin:6px 0}
+
+/* FORM (RESTORED) */
 .form{
-background:#111a2e;
+background:var(--card);
 padding:30px;
-border-radius:15px;
+border-radius:16px;
 max-width:500px;
 margin:auto;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 .form input{
 width:100%;
 padding:12px;
-margin:8px 0;
+margin:10px 0;
+border-radius:10px;
 border:none;
-border-radius:8px;
+outline:none;
 background:#0f172a;
 color:#fff;
 }
+.form input::placeholder{color:var(--muted)}
 
-/* TABLE */
-.table div{
-background:#111;
-margin:5px;
-padding:10px;
-border-radius:8px;
-}
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.testimonial{background:var(--card);padding:20px;border-radius:16px}
 
 /* CTA */
-.cta{
-background:linear-gradient(135deg,#22c55e,#06b6d4);
-padding:60px;
-border-radius:20px;
-animation:pulse 2s infinite;
-}
-@keyframes pulse{50%{transform:scale(1.03)}}
+.cta{background:linear-gradient(135deg,var(--primary),var(--secondary));padding:60px;border-radius:20px}
 
+footer{padding:20px;text-align:center;color:var(--muted)}
+
+.whatsapp{
+position:fixed;bottom:20px;left:20px;
+width:55px;height:55px;border-radius:50%;
+background:#25d366;display:flex;justify-content:center;align-items:center;
+font-size:26px;color:#fff;
+}
+
+.fade{opacity:0;transform:translateY(30px);transition:.8s}
+.fade.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 
 <body>
 
+<div id="intro">
+<img src="logo.png">
+</div>
+
 <nav>
 <div class="logo">
 <img src="logo.png"><span>MindSketch</span>
 </div>
+<div>
+<a href="#services">الخدمات</a>
+<a href="#work">الأعمال</a>
+<a href="#packages">الباقات</a>
+<a href="#courses">الكورسات</a>
+<a href="#book">الحجز</a>
+</div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<section class="hero fade">
 <h1>نصمم ونبني ونبيع 🔥</h1>
-<p>Branding • Design • Courses</p>
-<button class="btn">ابدأ الآن</button>
+<p>Branding + Design + Courses</p>
+<a class="btn" href="https://wa.me/201029261683">ابدأ الآن</a>
 </section>
 
-<!-- SERVICES -->
-<section>
+<section id="services" class="fade">
 <h2 class="title">الخدمات</h2>
-<div class="grid">
-<div class="card">تصميم سوشيال</div>
-<div class="card">لوجو</div>
-<div class="card">هوية بصرية</div>
+<div class="services">
+<div class="service">تصميم سوشيال</div>
+<div class="service">لوجو</div>
+<div class="service">هوية بصرية</div>
 </div>
 </section>
 
-<!-- PACKAGES -->
-<section>
-<h2 class="title">الباقات</h2>
-<div class="grid">
-<div class="card">Basic</div>
-<div class="card">Pro</div>
-<div class="card">Elite</div>
-</div>
-</section>
-
-<!-- PROJECTS -->
-<section>
+<section id="work" class="fade">
 <h2 class="title">الأعمال</h2>
-<div class="projects" id="projects"></div>
-</section>
-
-<!-- BOOKING -->
-<section>
-<h2 class="title">احجز الآن</h2>
-
-<div class="form">
-<input id="name" placeholder="الاسم">
-<input id="phone" placeholder="رقم الهاتف">
-<input id="service" placeholder="الخدمة">
-
-<button class="btn" onclick="saveBooking()">احجز</button>
+<div class="projects">
+<script>
+for(let i=1;i<=17;i++){
+document.write(`<div class='card'><img src='${i}.jpg'><div class='overlay'><h3>مشروع ${i}</h3><span>Brand</span></div></div>`)
+}
+</script>
 </div>
-
-<br>
-<button class="btn" onclick="exportExcel()">تحميل Excel 📥</button>
-
-<div class="table" id="data"></div>
-
 </section>
 
-<!-- CTA -->
-<section class="cta">
+<section id="packages" class="fade">
+<h2 class="title">الباقات</h2>
+<div class="packages">
+<div class="package"><h3>أساسية</h3><ul><li>تصميمات</li><li>دعم</li></ul></div>
+<div class="package"><h3>احترافية</h3><ul><li>هوية كاملة</li><li>دعم أولوية</li></ul></div>
+<div class="package"><h3>إليت</h3><ul><li>استراتيجية</li><li>تصميم كامل</li></ul></div>
+</div>
+</section>
+
+<section id="courses" class="fade">
+<h2 class="title">كورسات أونلاين</h2>
+<div class="packages">
+<div class="package"><h3>Photoshop</h3><ul><li>من الصفر</li></ul></div>
+<div class="package"><h3>Illustrator</h3><ul><li>شعارات</li></ul></div>
+</div>
+</section>
+
+<!-- BOOKING RESTORED -->
+<section id="book" class="fade">
+<h2 class="title">احجز الآن</h2>
+<div class="form">
+<input type="text" placeholder="الاسم">
+<input type="text" placeholder="رقم الهاتف">
+<input type="text" placeholder="الخدمة المطلوبة">
+<a class="btn" href="https://wa.me/201029261683?text=عايز احجز">إرسال</a>
+</div>
+</section>
+
+<section class="cta fade">
 <h2>عدد محدود أسبوعيًا ⏳</h2>
+<a class="btn" href="https://wa.me/201029261683">احجز الآن</a>
 </section>
 
-<!-- FIREBASE -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<footer>© 2026 MindSketch Ahmed&R</footer>
 
-const firebaseConfig = {
-apiKey: "YOUR_KEY",
-authDomain: "YOUR_DOMAIN",
-projectId: "YOUR_ID",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.db = db;
-window.getDocs = getDocs;
-window.collection = collection;
-
-/* SAVE */
-window.saveBooking = async function(){
-
-let name = document.getElementById("name").value;
-let phone = document.getElementById("phone").value;
-let service = document.getElementById("service").value;
-
-if(!name || !phone){
-alert("املأ البيانات");
-return;
-}
-
-await addDoc(collection(db,"clients"),{
-name,phone,service,date:new Date()
-});
-
-alert("تم الحجز 🔥");
-loadData();
-}
-
-/* LOAD */
-window.loadData = async function(){
-let data=document.getElementById("data");
-data.innerHTML="";
-
-const q = await getDocs(collection(db,"clients"));
-
-q.forEach(doc=>{
-let b=doc.data();
-data.innerHTML += `
-<div>
-👤 ${b.name}<br>
-📞 ${b.phone}<br>
-🎯 ${b.service}
-</div>`;
-});
-}
-
-loadData();
-
-</script>
-
-<!-- EMAIL JS -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-emailjs.init("YOUR_PUBLIC_KEY");
-
-function sendEmail(name,phone,service){
-emailjs.send("service_id","template_id",{
-name,phone,service
-});
-}
-</script>
-
-<!-- EXCEL -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<a class="whatsapp" href="https://wa.me/201029261683">💬</a>
 
 <script>
-async function exportExcel(){
-
-const q = await window.getDocs(window.collection(window.db,"clients"));
-
-let data = [];
-
-q.forEach(doc=>{
-let b = doc.data();
-data.push({
-"Name":b.name,
-"Phone":b.phone,
-"Service":b.service
-});
-});
-
-let ws = XLSX.utils.json_to_sheet(data);
-let wb = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb,ws,"Clients");
-
-XLSX.writeFile(wb,"bookings.xlsx");
-}
-</script>
-
-<!-- PROJECTS -->
-<script>
-const container=document.getElementById("projects");
-
-for(let i=1;i<=9;i++){
-let div=document.createElement("div");
-div.className="project";
-div.innerHTML=`<img src="${i}.jpg">`;
-container.appendChild(div);
-}
+window.addEventListener('load',()=>intro.style.display='none')
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show')})})
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el))
 </script>
 
 </body>
